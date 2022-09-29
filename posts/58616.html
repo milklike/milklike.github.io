@@ -284,55 +284,21 @@
 </div>
 
 
-  
-  <div id="gitalk-container"></div>  
-  <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
-
-<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
-
-<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
-
-<div id="gitalk-container"></div>
-
-<script type="text/javascript">
-
- var gitalk = new Gitalk({
-
- clientID: '84739a592b823e0cde8b',
-
- clientSecret: '680a0e5f17119820736a3fa4e90bc8ebb15cc7d9',
-
- repo: 'milklike.github.io',
-
- owner: 'milklike',
-
- admin: 'milklike',
-
- id: md5(location.pathname), 
-
- labels: 'Gitalk'.split(',').filter(l => l),
-
- perPage: 10,
-
- pagerDirection: 'last',
-
- createIssueManually: true,
-
- distractionFreeMode: false,
- proxy: 'https://broad-fog-9637.823506336.workers.dev/'
-
- })
-
- gitalk.render('gitalk-container')
-
+ 
+ <div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: 'milklike',
+  repo: 'milklike.github.io',
+  oauth: {
+    client_id: '84739a592b823e0cde8b',
+    client_secret: '680a0e5f17119820736a3fa4e90bc8ebb15cc7d9',
+  },
+})
+gitment.render('container')
 </script>
-
-
-  
- 
- 
- 
- 
 
 
 
