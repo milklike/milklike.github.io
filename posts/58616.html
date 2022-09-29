@@ -285,23 +285,38 @@
 
 
  
- <div id="container"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  owner: 'milklike',
-  repo: 'milklike.github.io',
-  oauth: {
-    client_id: '84739a592b823e0cde8b',
-    client_secret: '680a0e5f17119820736a3fa4e90bc8ebb15cc7d9',
-  },
-})
-gitment.render('container')
-</script>
 
 
+  <div id="vcomments" >
+    
+  </div>
+  
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+     .then(response => response.json())
+     .then(data => {
+       document.getElementById("veditor").setAttribute("placeholder",data.hitokoto+"__"+data.from);
+     })
+     .catch(console.error)
+ </script>
+  <script>
 
+      new Valine({
+          el: '#vcomments',
+          appId: 'godnmDWWhHkORJzf2ZhbfLj8-gzGzoHsz',
+          appKey: 'J7ofFStNZGFplurSCStG1n99',
+          visitor: true ,
+          
+      })
+  </script>
+  <style>
+    #vcomments
+    {
+      width: 45%;
+      margin:auto;
+    }
+    </style>
 
             </div>
             <footer id="footer" class="footer">
