@@ -78,8 +78,6 @@
                 
                     <a class="menu-item" href="/tag">Tags</a>
                 
-                    <a class="menu-item" href="/about">About</a>
-                
                 <input id="switch_default" type="checkbox" class="switch_default">
                 <label for="switch_default" class="toggleBtn"></label>
             </div>
@@ -102,8 +100,6 @@
                     <a class="menu-item" href="/category">Categories</a>
                 
                     <a class="menu-item" href="/tag">Tags</a>
-                
-                    <a class="menu-item" href="/about">About</a>
                 
             </div>
         </div>
@@ -228,13 +224,8 @@
 <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="一种通过-future-或-回调-来规避多余线程的并发形式"><a href="#一种通过-future-或-回调-来规避多余线程的并发形式" class="headerlink" title="一种通过 future 或 回调 来规避多余线程的并发形式"></a>一种通过 future 或 回调 来规避多余线程的并发形式</h3><pre><code>这里的future在C#中就是Task类型与Task&lt;TResult&gt;
 </code></pre>
 <p>直接上代码，环境：.net framework 4.7.2, C#7.3,winform</p>
-<pre><code>private async void button1_Click(object sender, EventArgs e)
-&#123;
-    label1.Text = &quot;异步发生前&quot;;
-    await Task.Delay(5000);
-    label1.Text = &quot;异步发生后&quot;;
-&#125;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private async void button1_Click(object sender, EventArgs e)</span><br><span class="line">&#123;</span><br><span class="line">    label1.Text = &quot;异步发生前&quot;;</span><br><span class="line">    await Task.Delay(5000);</span><br><span class="line">    label1.Text = &quot;异步发生后&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><img src="/Task1.gif" alt="Task"><br>如上图，可以看到，这里的delay并没有阻塞UI线程，造成卡顿<br>因此，我们可以这样理解；  </p>
 <pre><code>虽然该操作（Task.Delay(5000)）已经开始执行,但是他没有阻塞原来的线程（button_click是UI线程调用的），
 启动这个操作（Task.Delay(5000)）的线程依然可以自由的进行其他工作（比如拖拽窗体并不受到影响）
@@ -250,11 +241,6 @@
                         <span>Abel Li</span>
                     </p>
                 
-                
-                    <p class="copyright-item">
-                        <span>Permalink:</span>
-                        <span><a href="http://example.com/2022/09/28/C-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B1/">http://example.com/2022/09/28/C-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B1/</a></span>
-                    </p>
                 
                 
                     <p class="copyright-item">
@@ -297,6 +283,21 @@
     </article>
 </div>
 
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: '84739a592b823e0cde8b', // 可选。默认为 location.href
+  owner: 'milklie',
+  repo: 'milklike.github.io',
+  oauth: {
+    client_id: 'milklike',
+    client_secret: '680a0e5f17119820736a3fa4e90bc8ebb15cc7d9',
+  },
+})
+gitment.render('container')
+</script>
             </div>
             <footer id="footer" class="footer">
     <div class="copyright">
