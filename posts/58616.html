@@ -285,6 +285,24 @@
 
 
  
+<div id="gitalk-container"></div> 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"> 
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>  
+<script>
+  var gitalk = new Gitalk({   
+     clientID: '84739a592b823e0cde8b',   
+     clientSecret: '680a0e5f17119820736a3fa4e90bc8ebb15cc7d9',   
+     repo: 'milklike.github.io',   
+     owner: 'milklike',   
+     admin: ['milklike'],   
+     id: location.pathname,      // 请确保你的 location 连接小于 50 个字符，否则，插件会生成失败   
+     distractionFreeMode: false // 专注模式 
+})  
+
+    gitalk.render('gitalk-container')
+</script>
+
+
 
 
   <div id="vcomments" >
