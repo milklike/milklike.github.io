@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Abel Li">
+
+
+
+
+
+<title>C#异步编程2 | Abel Li &#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Abel Li&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Abel Li&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">C#异步编程2</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Abel Li</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">2022年10月2日&nbsp;&nbsp;12:44:15</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/">异步编程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>启动一个异步任务  </p>
+<pre><code>Task.Run(Action action)
+Task&lt;TResult&gt;.Run&lt;TResult&gt;(Func&lt;TResult&gt; func);
+</code></pre>
+<p>或者：  </p>
+<pre><code>Task a = new Task(Action action);
+a.Start();
+</code></pre>
+<p>通常是这两种形式。<br>传入的参数是匿名函数，所以写入Lamda表达式也一样。比如:  </p>
+<pre><code>Task.Run(() =&gt; Console.WriteLine(&quot;one Task Start&quot;));
+</code></pre>
+<h2 id="是用Thread开启异步任务还是ThreadPool开启异步任务？"><a href="#是用Thread开启异步任务还是ThreadPool开启异步任务？" class="headerlink" title="是用Thread开启异步任务还是ThreadPool开启异步任务？"></a>是用Thread开启异步任务还是ThreadPool开启异步任务？</h2><p>回答这个问题需要看看C#的源码。以’a.Start’为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public void Start(TaskScheduler scheduler)</span><br><span class="line">&#123;</span><br><span class="line">    int stateFlags = m_stateFlags;</span><br><span class="line">    if (IsCompletedMethod(stateFlags))</span><br><span class="line">    &#123;</span><br><span class="line">        throw new InvalidOperationException(Environment.GetResourceString(&quot;Task_Start_TaskCompleted&quot;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (scheduler == null)</span><br><span class="line">    &#123;</span><br><span class="line">        throw new ArgumentNullException(&quot;scheduler&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    TaskCreationOptions taskCreationOptions = OptionsMethod(stateFlags);</span><br><span class="line">    if ((taskCreationOptions &amp; (TaskCreationOptions)1024) != 0)</span><br><span class="line">    &#123;</span><br><span class="line">        throw new InvalidOperationException(Environment.GetResourceString(&quot;Task_Start_Promise&quot;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if ((taskCreationOptions &amp; (TaskCreationOptions)512) != 0)</span><br><span class="line">    &#123;</span><br><span class="line">        throw new InvalidOperationException(Environment.GetResourceString(&quot;Task_Start_ContinuationTask&quot;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (Interlocked.CompareExchange(ref m_taskScheduler, scheduler, null) != null)</span><br><span class="line">    &#123;</span><br><span class="line">        throw new InvalidOperationException(Environment.GetResourceString(&quot;Task_Start_AlreadyStarted&quot;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ScheduleAndStart(needsProtection: true);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>深入ScheduleAndStart  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">internal void ScheduleAndStart(bool needsProtection)</span><br><span class="line">&#123;</span><br><span class="line">    if (needsProtection)</span><br><span class="line">    &#123;</span><br><span class="line">        if (!MarkStarted())</span><br><span class="line">        &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        m_stateFlags |= 65536;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (s_asyncDebuggingEnabled)</span><br><span class="line">    &#123;</span><br><span class="line">        AddToActiveTasks(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (AsyncCausalityTracer.LoggingOn &amp;&amp; (Options &amp; (TaskCreationOptions)512) == 0)</span><br><span class="line">    &#123;</span><br><span class="line">        AsyncCausalityTracer.TraceOperationCreation(CausalityTraceLevel.Required, Id, &quot;Task: &quot; + ((Delegate)m_action).Method.Name, 0uL);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    try</span><br><span class="line">    &#123;</span><br><span class="line">        m_taskScheduler.InternalQueueTask(this);</span><br><span class="line">    &#125;</span><br><span class="line">    catch (ThreadAbortException exceptionObject)</span><br><span class="line">    &#123;</span><br><span class="line">        AddException(exceptionObject);</span><br><span class="line">        FinishThreadAbortedTask(bTAEAddedToExceptionHolder: true, delegateRan: false);</span><br><span class="line">    &#125;</span><br><span class="line">    catch (Exception innerException)</span><br><span class="line">    &#123;</span><br><span class="line">        TaskSchedulerException ex = new TaskSchedulerException(innerException);</span><br><span class="line">        AddException(ex);</span><br><span class="line">        Finish(bUserDelegateExecuted: false);</span><br><span class="line">        if ((Options &amp; (TaskCreationOptions)512) == 0)</span><br><span class="line">        &#123;</span><br><span class="line">            m_contingentProperties.m_exceptionsHolder.MarkAsHandled(calledFromFinalizer: false);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        throw ex;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="在这里实际起作用的是-m-taskScheduler-InternalQueueTask-this"><a href="#在这里实际起作用的是-m-taskScheduler-InternalQueueTask-this" class="headerlink" title="在这里实际起作用的是 m_taskScheduler.InternalQueueTask(this);"></a>在这里实际起作用的是 m_taskScheduler.InternalQueueTask(this);</h3><p>继续看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">internal void InternalQueueTask(Task task)</span><br><span class="line">&#123;</span><br><span class="line">	task.FireTaskScheduledIfNeeded(this);</span><br><span class="line">	this.QueueTask(task);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这时候我们再深入会发现TaskScheduler是个抽象类，早在Start时，已经给了一个TaskScheduler.Current，就是一个ThreadPoolTaskScheduler类。<br>我们找到ThreadPoolTaskScheduler的QueueTask方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">protected internal override void QueueTask(Task task)</span><br><span class="line">&#123;</span><br><span class="line">	if ((task.Options &amp; TaskCreationOptions.LongRunning) != TaskCreationOptions.None)</span><br><span class="line">	&#123;</span><br><span class="line">		new Thread(ThreadPoolTaskScheduler.s_longRunningThreadWork)</span><br><span class="line">		&#123;</span><br><span class="line">			IsBackground = true</span><br><span class="line">		&#125;.Start(task);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	bool forceGlobal = (task.Options &amp; TaskCreationOptions.PreferFairness) &gt; TaskCreationOptions.None;</span><br><span class="line">	ThreadPool.UnsafeQueueCustomWorkItem(task, forceGlobal);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这时候是不是发现熟悉的味道了，他开始新异步任务又两种形式，一种是Thread，一种是ThreadPool,这两种方式有啥区别，简单来说就是，需要长时间执行的用Thread，因为线程池有数量限制，所以只建议在线程池里执行可以快速结束的任务。</p>
+<p>可以看到主要是以TaskCreationOptions.LongRunning来区分的，那么需要LongRunning的写法：</p>
+<pre><code>Task a = new Task(action, TaskCreationOptions.LongRunning);
+a.Start();
+</code></pre>
+<p>PS:Task.Run的形式则是默认以线程池执行。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Abel Li</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span></span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Learn and More Interests</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/C/"># C#</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/posts/58616.html">C#异步编程1</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+<script>
+  ((window.gitter = {}).chat = {}).options = {
+    //room替换成自己的聊天室名称即可，room的名称规则是：username/roomname
+    room: 'abeli-li-blog/community'
+  };
+</script>
+<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+
+
+  <div id="vcomments" >
+    
+  </div>
+  
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+     .then(response => response.json())
+     .then(data => {
+       document.getElementById("veditor").setAttribute("placeholder",data.hitokoto+"__"+data.from);
+     })
+     .catch(console.error)
+ </script>
+  <script>
+
+      new Valine({
+          el: '#vcomments',
+          appId: 'godnmDWWhHkORJzf2ZhbfLj8-gzGzoHsz',
+          appKey: 'J7ofFStNZGFplurSCStG1n99',
+          visitor: true ,
+          
+      })
+  </script>
+  <style>
+    #vcomments
+    {
+      width: 45%;
+      margin:auto;
+    }
+    </style>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Abel Li | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
