@@ -13,7 +13,7 @@
 
 
 
-<title>C#异步编程3 | Abel Li &#39;s Blog</title>
+<title>C#异步编程4 | Abel Li &#39;s Blog</title>
 
 
 
@@ -189,7 +189,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">C#异步编程3</h1>
+            <h1 class="post-title">C#异步编程4</h1>
             
                 <div class="post-meta">
                     
@@ -198,7 +198,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">2022年10月3日&nbsp;&nbsp;22:39:19</a>
+                        Date: <a href="#">2022年10月4日&nbsp;&nbsp;23:31:44</a>
                         </span>
                     
                     
@@ -214,20 +214,20 @@
         </header>
 
         <div class="post-content">
-            <h2 id="异步任务之暂停"><a href="#异步任务之暂停" class="headerlink" title="异步任务之暂停"></a>异步任务之暂停</h2><p>我们在实际编程过程中，通常会使用一些暂停，比如：  </p>
-<h3 id="死循环暂停"><a href="#死循环暂停" class="headerlink" title="死循环暂停"></a>死循环暂停</h3><pre><code>直接死循环来暂停整个线程，直到满足某种条件
+            <h2 id="处理一组任务"><a href="#处理一组任务" class="headerlink" title="处理一组任务"></a>处理一组任务</h2><p>上一篇提到了WhenAny,这篇会详细讲解WhenAll与WhenAny的使用</p>
+<h3 id="WhenAll"><a href="#WhenAll" class="headerlink" title="WhenAll"></a>WhenAll</h3><pre><code>定义：如果所有任务有着相同的结果类型，并且均已完成，那么Task.WhenAll会返回一个数组，其中包含所有的任务结果。并且均已完成，那么Task.WhenAll会返回一个数组，其中包含所有的任务结果。
 </code></pre>
-<h3 id="Thread-Sleep-time"><a href="#Thread-Sleep-time" class="headerlink" title="Thread.Sleep(time)"></a>Thread.Sleep(time)</h3><pre><code>Thread.Sleep(暂停时间)
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">private async void WhenAllTaskComplete()</span><br><span class="line">&#123;</span><br><span class="line">    Task&lt;int&gt; task1 = new Task&lt;int&gt;(() =&gt; &#123; Task.Delay(1000);return 1; &#125;);</span><br><span class="line">    Task&lt;int&gt; task2 = new Task&lt;int&gt;(() =&gt; &#123; Task.Delay(2000);return 2; &#125;);</span><br><span class="line">    Task&lt;int&gt; task3 = new Task&lt;int&gt;(() =&gt; &#123; Task.Delay(3000);return 3; &#125;);</span><br><span class="line">    task1.Start();</span><br><span class="line">    task2.Start();</span><br><span class="line">    task3.Start();</span><br><span class="line"></span><br><span class="line">    int[] result = await Task.WhenAll(task1, task2, task3);</span><br><span class="line">    Console.WriteLine(result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码执行后可以看到结果包含1，2，3</p>
+<h3 id="WhenAny"><a href="#WhenAny" class="headerlink" title="WhenAny"></a>WhenAny</h3><pre><code>定义：如果所有任务有着相同的结果类型，只关心第一个完成的任务。
 </code></pre>
-<h3 id="await-Task-Delay-time"><a href="#await-Task-Delay-time" class="headerlink" title="await Task.Delay(time)"></a>await Task.Delay(time)</h3><pre><code>用法与Thread.Sleep(time)一致
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">private async Task&lt;int&gt; WhenAnyTaskComplete()</span><br><span class="line">&#123;</span><br><span class="line">    Task&lt;int&gt; task1 = new Task&lt;int&gt;(() =&gt; &#123; Task.Delay(1000); return 1; &#125;);</span><br><span class="line">    Task&lt;int&gt; task2 = new Task&lt;int&gt;(() =&gt; &#123; Task.Delay(2000); return 2; &#125;);</span><br><span class="line">    Task&lt;int&gt; task3 = new Task&lt;int&gt;(() =&gt; &#123; Task.Delay(3000); return 3; &#125;);</span><br><span class="line">    task1.Start();</span><br><span class="line">    task2.Start();</span><br><span class="line">    task3.Start();</span><br><span class="line"></span><br><span class="line">    Task&lt;int&gt; result = await Task.WhenAny(task1, task2, task3);</span><br><span class="line">    int res = await result;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码执行后，返回值是1，因为task1最先完成。</p>
+<h3 id="按顺序等待任务"><a href="#按顺序等待任务" class="headerlink" title="按顺序等待任务"></a>按顺序等待任务</h3><pre><code>没有指定的方法，我这里的建议是使用遍历
 </code></pre>
-<h4 id="那为啥不直接用Thread-Sleep-呢？"><a href="#那为啥不直接用Thread-Sleep-呢？" class="headerlink" title="那为啥不直接用Thread.Sleep()呢？"></a>那为啥不直接用Thread.Sleep()呢？</h4><ol>
-<li>精度高（因为异步特性，会直接通知原线程继续任务，而Sleep一直处在轮询中，可能刚好在这个轮询周期到来时结束，但只能在下个轮询周期才再过来）</li>
-<li>可以实现“软超时”</li>
-</ol>
-<h5 id="我们看一下软超时怎么实现"><a href="#我们看一下软超时怎么实现" class="headerlink" title="我们看一下软超时怎么实现"></a>我们看一下软超时怎么实现</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">private async Task&lt;string&gt; WaitForSomething()</span><br><span class="line">&#123;</span><br><span class="line">    //假设task1是个需要执行的CPU密集型操作或者需要等待远端回应的操作</span><br><span class="line">    Task&lt;string&gt; task1 = new Task&lt;string&gt;(() =&gt; &#123; Task.Delay(500);return &quot;&quot;; &#125;);</span><br><span class="line">    Task task2 = Task.Delay(300);</span><br><span class="line">    var completedTask = await Task.WhenAny(task1,task2);</span><br><span class="line">    if(completedTask == task2)</span><br><span class="line">        return null;</span><br><span class="line">    return await task1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当然，我们也可以使用CancellationTokenSource实现，这里仅展示Task.Delay的用法。</p>
-<p>回到我们的源码，如果task1不能在300ms内反应，就会返回null，PS：我这里写的就是必然300ms内不反应。大家可以以修改500这个值，改到小于300试一试。<br>PS：如果看不懂WhenAny操作，请看我以后更新的博客。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">private async void WaitAllTaskInOrder()</span><br><span class="line">&#123;</span><br><span class="line">    Task&lt;int&gt; task1 = new Task&lt;int&gt;(() =&gt; &#123; Task.Delay(1000); return 1; &#125;);</span><br><span class="line">    Task&lt;int&gt; task2 = new Task&lt;int&gt;(() =&gt; &#123; Task.Delay(2000); return 2; &#125;);</span><br><span class="line">    Task&lt;int&gt; task3 = new Task&lt;int&gt;(() =&gt; &#123; Task.Delay(3000); return 3; &#125;);</span><br><span class="line">    task1.Start();</span><br><span class="line">    task2.Start();</span><br><span class="line">    task3.Start();</span><br><span class="line">    Task&lt;int&gt;[] tasks = new Task&lt;int&gt;[3] &#123; task1,task2,task3&#125;;</span><br><span class="line"></span><br><span class="line">    foreach(var task in tasks)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(await task);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="不按顺序等待"><a href="#不按顺序等待" class="headerlink" title="不按顺序等待"></a>不按顺序等待</h3><pre><code>直接用Task.WaitAll就行，不多说了，大同小异
+</code></pre>
 
         </div>
 
@@ -253,10 +253,8 @@
         
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/posts/d7c33af.html">C#异步编程4</a>
             
-            
-            <a class="next" rel="next" href="/posts/e41f969a.html">C#异步编程2</a>
+            <a class="next" rel="next" href="/posts/9318a60c.html">C#异步编程3</a>
             
         </section>
 
