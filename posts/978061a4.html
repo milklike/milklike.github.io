@@ -13,7 +13,7 @@
 
 
 
-<title>Ini文件读写 | Interface Documentation</title>
+<title>XML读写 | Interface Documentation</title>
 
 
 
@@ -189,7 +189,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Ini文件读写</h1>
+            <h1 class="post-title">XML读写</h1>
             
                 <div class="post-meta">
                     
@@ -198,7 +198,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">2022年12月2日&nbsp;&nbsp;18:12:28</a>
+                        Date: <a href="#">2022年12月6日&nbsp;&nbsp;8:39:40</a>
                         </span>
                     
                     
@@ -207,7 +207,7 @@
         </header>
 
         <div class="post-content">
-            <h1 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a><strong>文件读写</strong></h1><h2 id="Ini文本读写"><a href="#Ini文本读写" class="headerlink" title="Ini文本读写"></a><strong>Ini文本读写</strong></h2><h3 id="接口列表"><a href="#接口列表" class="headerlink" title="接口列表"></a>接口列表</h3><table>
+            <h1 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a><strong>文件读写</strong></h1><h2 id="Xml文本读写"><a href="#Xml文本读写" class="headerlink" title="Xml文本读写"></a><strong>Xml文本读写</strong></h2><h3 id="接口列表"><a href="#接口列表" class="headerlink" title="接口列表"></a>接口列表</h3><table>
 <thead>
 <tr>
 <th>函数名称</th>
@@ -215,19 +215,23 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><a href="#Ini">Ini</a><a id="ini_back"></a></td>
-<td>初始化函数</td>
+<td><a href="#ReadXML">ReadXML</a><a id="readXML_back"></a></td>
+<td>读取XML文件</td>
 </tr>
 <tr>
-<td><a href="#readini">ReadIni</a><a id="readini_back"></a></td>
-<td>读取Ini文件</td>
+<td><a href="#WriteXML">WriteXML</a><a id="writeXML_back"></a></td>
+<td>序列化XML文件</td>
 </tr>
 <tr>
-<td><a href="#writeini">WriteIni</a><a id="writeini_back"></a></td>
-<td>需要上传的字符串</td>
+<td><a href="#XmlConfigWriter">XmlConfigWriter</a><a id="xmlConfigWriter_back"></a></td>
+<td>xml配置写入器</td>
+</tr>
+<tr>
+<td><a href="#XmlConfigReader">XmlConfigReader</a><a id="xmlConfigReader_back"></a></td>
+<td>读取XML文件</td>
 </tr>
 </tbody></table>
-<h4 id="Ini"><a href="#Ini" class="headerlink" title="Ini"></a>Ini<a id="Ini"></a></h4><table>
+<h4 id="ReadXML"><a href="#ReadXML" class="headerlink" title="ReadXML"></a>ReadXML<a id="ReadXML"></a></h4><table>
 <thead>
 <tr>
 <th>参数</th>
@@ -235,15 +239,19 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>Path</td>
-<td>文件路径</td>
+<td>XmlFilePath</td>
+<td>XML文件的存储路径</td>
+</tr>
+<tr>
+<td>type</td>
+<td>类型</td>
 </tr>
 </tbody></table>
 <ul>
-<li><p><a href="#ini_back">例程</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ini test = new Ini(&quot;C://Test.ini&quot;);</span><br></pre></td></tr></table></figure></li>
+<li><p><a href="#readXML_back">例程</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string filePath=&quot;C://Test.xml&quot;;</span><br><span class="line">Object obj=ClsXml.ReadXML(filePath, typeof(ClsPerson));//ClsPerson代表一个类</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h4 id="ReadIni"><a href="#ReadIni" class="headerlink" title="ReadIni"></a>ReadIni<a id="readini"></a></h4><table>
+<h4 id="WriteXML"><a href="#WriteXML" class="headerlink" title="WriteXML"></a>WriteXML<a id="WriteXML"></a></h4><table>
 <thead>
 <tr>
 <th>参数</th>
@@ -251,23 +259,23 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>label</td>
-<td>Ini文件中Section名称</td>
+<td>myDs</td>
+<td>Object基类的实例化对象</td>
 </tr>
 <tr>
-<td>name</td>
-<td>Ini文件中Key名称</td>
+<td>XmlFilePath</td>
+<td>XML文件的存储路径</td>
 </tr>
 <tr>
-<td>value</td>
-<td>如果读取不到则返回该值</td>
+<td>type</td>
+<td>类型</td>
 </tr>
 </tbody></table>
 <ul>
-<li><p><a href="#readini_back">例程</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ini test = new Ini(&quot;C://Test.ini&quot;);</span><br><span class="line">string systemInfo = test.ReadIni(&quot;Info&quot;,&quot;SystemInfo&quot;,&quot;&quot;);</span><br></pre></td></tr></table></figure></li>
+<li><p><a href="#writeXML_back">例程</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">string filePath=&quot;C://Test.xml&quot;;</span><br><span class="line">ClsPerson person = new ClsPerson() </span><br><span class="line">&#123; </span><br><span class="line">    name = &quot;test&quot;,</span><br><span class="line">    age=11</span><br><span class="line">&#125;;</span><br><span class="line">ClsXml.WriteXML(person,filePath,typeof(ClsPerson));</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h4 id="WriteIni"><a href="#WriteIni" class="headerlink" title="[WriteIni]"></a>[WriteIni]<a id="writeini"></a></h4><table>
+<h4 id="XmlConfigWriter"><a href="#XmlConfigWriter" class="headerlink" title="XmlConfigWriter"></a>XmlConfigWriter<a id="XmlConfigWriter"></a></h4><table>
 <thead>
 <tr>
 <th>参数</th>
@@ -275,21 +283,37 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>label</td>
-<td>Ini文件中Section名称</td>
+<td>obja</td>
+<td>XML文件的对象</td>
 </tr>
 <tr>
-<td>name</td>
-<td>Ini文件中Key名称</td>
-</tr>
-<tr>
-<td>value</td>
-<td>如果读取不到则返回该值</td>
+<td>path</td>
+<td>XML文件的路径</td>
 </tr>
 </tbody></table>
 <ul>
-<li><p><a href="#writeini_back">例程</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ini test = new Ini(&quot;C://Test.ini&quot;);</span><br><span class="line">string systemInfo = test.ReadIni(&quot;Info&quot;,&quot;SystemInfo&quot;,&quot;&quot;);</span><br></pre></td></tr></table></figure></li>
+<li><p><a href="#xmlConfigWriter_back">例程</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string filePath=&quot;C://Test.xlsx&quot;;</span><br><span class="line">ClsPerson person = new ClsPerson() &#123; name = &quot;test&quot;,age=11&#125;;</span><br><span class="line">ClsXml.XmlConfigWriter(person,filePath);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="XmlConfigReader"><a href="#XmlConfigReader" class="headerlink" title="XmlConfigReader"></a>XmlConfigReader<a id="XmlConfigReader"></a></h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>filePath</td>
+<td>XML文件的路径</td>
+</tr>
+<tr>
+<td>type</td>
+<td>类型</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p><a href="#xmlConfigReader_back">例程</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string filePath=&quot;C://Test.xlsx&quot;;</span><br><span class="line">ClsXml.XmlConfigReader(filePath, typeof(ClsPerson));//ClsPerson代表一个类</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
 </ul>
 
         </div>
@@ -316,10 +340,10 @@
         
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/posts/978061a4.html">XML读写</a>
+                <a class="prev" rel="prev" href="/posts/f84edbf5.html">Json读写</a>
             
             
-            <a class="next" rel="next" href="/posts/11c5aa57.html">Excel读写</a>
+            <a class="next" rel="next" href="/posts/117ad454.html">Ini文件读写</a>
             
         </section>
 
